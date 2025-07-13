@@ -6,6 +6,14 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/crowdllama/crowdllama-pb/llama/v1";
 
+// BaseMessage represents a generic message that can contain either a request or response
+message BaseMessage {
+  oneof message {
+    GenerateRequest generate_request = 1;
+    GenerateResponse generate_response = 2;
+  }
+}
+
 // GenerateRequest represents a request to generate a response
 message GenerateRequest {
   string model = 1; // The model to use (e.g., "llama3.2")

@@ -22,6 +22,89 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// BaseMessage represents a generic message that can contain either a request or response
+type BaseMessage struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Message:
+	//
+	//	*BaseMessage_GenerateRequest
+	//	*BaseMessage_GenerateResponse
+	Message       isBaseMessage_Message `protobuf_oneof:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BaseMessage) Reset() {
+	*x = BaseMessage{}
+	mi := &file_llama_v1_llama_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BaseMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BaseMessage) ProtoMessage() {}
+
+func (x *BaseMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_llama_v1_llama_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BaseMessage.ProtoReflect.Descriptor instead.
+func (*BaseMessage) Descriptor() ([]byte, []int) {
+	return file_llama_v1_llama_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *BaseMessage) GetMessage() isBaseMessage_Message {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *BaseMessage) GetGenerateRequest() *GenerateRequest {
+	if x != nil {
+		if x, ok := x.Message.(*BaseMessage_GenerateRequest); ok {
+			return x.GenerateRequest
+		}
+	}
+	return nil
+}
+
+func (x *BaseMessage) GetGenerateResponse() *GenerateResponse {
+	if x != nil {
+		if x, ok := x.Message.(*BaseMessage_GenerateResponse); ok {
+			return x.GenerateResponse
+		}
+	}
+	return nil
+}
+
+type isBaseMessage_Message interface {
+	isBaseMessage_Message()
+}
+
+type BaseMessage_GenerateRequest struct {
+	GenerateRequest *GenerateRequest `protobuf:"bytes,1,opt,name=generate_request,json=generateRequest,proto3,oneof"`
+}
+
+type BaseMessage_GenerateResponse struct {
+	GenerateResponse *GenerateResponse `protobuf:"bytes,2,opt,name=generate_response,json=generateResponse,proto3,oneof"`
+}
+
+func (*BaseMessage_GenerateRequest) isBaseMessage_Message() {}
+
+func (*BaseMessage_GenerateResponse) isBaseMessage_Message() {}
+
 // GenerateRequest represents a request to generate a response
 type GenerateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -34,7 +117,7 @@ type GenerateRequest struct {
 
 func (x *GenerateRequest) Reset() {
 	*x = GenerateRequest{}
-	mi := &file_llama_v1_llama_proto_msgTypes[0]
+	mi := &file_llama_v1_llama_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +129,7 @@ func (x *GenerateRequest) String() string {
 func (*GenerateRequest) ProtoMessage() {}
 
 func (x *GenerateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_llama_v1_llama_proto_msgTypes[0]
+	mi := &file_llama_v1_llama_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +142,7 @@ func (x *GenerateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateRequest.ProtoReflect.Descriptor instead.
 func (*GenerateRequest) Descriptor() ([]byte, []int) {
-	return file_llama_v1_llama_proto_rawDescGZIP(), []int{0}
+	return file_llama_v1_llama_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GenerateRequest) GetModel() string {
@@ -105,7 +188,7 @@ type GenerateResponse struct {
 
 func (x *GenerateResponse) Reset() {
 	*x = GenerateResponse{}
-	mi := &file_llama_v1_llama_proto_msgTypes[1]
+	mi := &file_llama_v1_llama_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -117,7 +200,7 @@ func (x *GenerateResponse) String() string {
 func (*GenerateResponse) ProtoMessage() {}
 
 func (x *GenerateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_llama_v1_llama_proto_msgTypes[1]
+	mi := &file_llama_v1_llama_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -130,7 +213,7 @@ func (x *GenerateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateResponse.ProtoReflect.Descriptor instead.
 func (*GenerateResponse) Descriptor() ([]byte, []int) {
-	return file_llama_v1_llama_proto_rawDescGZIP(), []int{1}
+	return file_llama_v1_llama_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GenerateResponse) GetModel() string {
@@ -228,7 +311,11 @@ var File_llama_v1_llama_proto protoreflect.FileDescriptor
 
 const file_llama_v1_llama_proto_rawDesc = "" +
 	"\n" +
-	"\x14llama/v1/llama.proto\x12\bllama.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"W\n" +
+	"\x14llama/v1/llama.proto\x12\bllama.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xab\x01\n" +
+	"\vBaseMessage\x12F\n" +
+	"\x10generate_request\x18\x01 \x01(\v2\x19.llama.v1.GenerateRequestH\x00R\x0fgenerateRequest\x12I\n" +
+	"\x11generate_response\x18\x02 \x01(\v2\x1a.llama.v1.GenerateResponseH\x00R\x10generateResponseB\t\n" +
+	"\amessage\"W\n" +
 	"\x0fGenerateRequest\x12\x14\n" +
 	"\x05model\x18\x01 \x01(\tR\x05model\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x16\n" +
@@ -268,21 +355,24 @@ func file_llama_v1_llama_proto_rawDescGZIP() []byte {
 	return file_llama_v1_llama_proto_rawDescData
 }
 
-var file_llama_v1_llama_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_llama_v1_llama_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_llama_v1_llama_proto_goTypes = []any{
-	(*GenerateRequest)(nil),       // 0: llama.v1.GenerateRequest
-	(*GenerateResponse)(nil),      // 1: llama.v1.GenerateResponse
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*BaseMessage)(nil),           // 0: llama.v1.BaseMessage
+	(*GenerateRequest)(nil),       // 1: llama.v1.GenerateRequest
+	(*GenerateResponse)(nil),      // 2: llama.v1.GenerateResponse
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_llama_v1_llama_proto_depIdxs = []int32{
-	2, // 0: llama.v1.GenerateResponse.created_at:type_name -> google.protobuf.Timestamp
-	0, // 1: llama.v1.LlamaService.Generate:input_type -> llama.v1.GenerateRequest
-	1, // 2: llama.v1.LlamaService.Generate:output_type -> llama.v1.GenerateResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1, // 0: llama.v1.BaseMessage.generate_request:type_name -> llama.v1.GenerateRequest
+	2, // 1: llama.v1.BaseMessage.generate_response:type_name -> llama.v1.GenerateResponse
+	3, // 2: llama.v1.GenerateResponse.created_at:type_name -> google.protobuf.Timestamp
+	1, // 3: llama.v1.LlamaService.Generate:input_type -> llama.v1.GenerateRequest
+	2, // 4: llama.v1.LlamaService.Generate:output_type -> llama.v1.GenerateResponse
+	4, // [4:5] is the sub-list for method output_type
+	3, // [3:4] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_llama_v1_llama_proto_init() }
@@ -290,13 +380,17 @@ func file_llama_v1_llama_proto_init() {
 	if File_llama_v1_llama_proto != nil {
 		return
 	}
+	file_llama_v1_llama_proto_msgTypes[0].OneofWrappers = []any{
+		(*BaseMessage_GenerateRequest)(nil),
+		(*BaseMessage_GenerateResponse)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_llama_v1_llama_proto_rawDesc), len(file_llama_v1_llama_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
