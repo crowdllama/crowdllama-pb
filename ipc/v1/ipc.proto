@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package ipc.v1;
+
+option go_package = "github.com/crowdllama/crowdllama-pb/ipc/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Status represents the status of an operation
+enum Status {
+  STATUS_UNSPECIFIED = 0;
+  STATUS_SUCCESS = 1;
+  STATUS_ERROR = 2;
+  STATUS_PENDING = 3;
+  STATUS_CANCELLED = 4;
+}
+
+// ErrorCode represents different types of errors
+enum ErrorCode {
+  ERROR_CODE_UNSPECIFIED = 0;
+  ERROR_CODE_INVALID_REQUEST = 1;
+  ERROR_CODE_INTERNAL_ERROR = 2;
+  ERROR_CODE_TIMEOUT = 3;
+  ERROR_CODE_NOT_FOUND = 4;
+  ERROR_CODE_PERMISSION_DENIED = 5;
+  ERROR_CODE_RESOURCE_EXHAUSTED = 6;
+  ERROR_CODE_UNAVAILABLE = 7;
+}
+
+// Error represents an error response
+message Error {
+  ErrorCode code = 1; // The error code
+  string message = 2; // Human-readable error message
+  string details = 3; // Additional error details
+  map<string, string> metadata = 4; // Additional metadata
+}
+
+// StatusResponse represents a status response
+message StatusResponse {
+  Status status = 1; // The status of the operation
+  string message = 2; // Status message
+  google.protobuf.Timestamp timestamp = 3; // When the status was generated
+  Error error = 4; // Error details if status is ERROR
+  map<string, string> metadata = 5; // Additional metadata
+}
+
+// HealthCheckRequest represents a health check request
+message HealthCheckRequest {
+  string service = 1; // Service name to check
+  map<string, string> parameters = 2; // Health check parameters
+}
+
+// HealthCheckResponse represents a health check response
+message HealthCheckResponse {
+  Status status = 1; // Overall health status
+  string service = 2; // Service name
+  google.protobuf.Timestamp timestamp = 3; // When the check was performed
+  map<string, string> details = 4; // Health check details
+  Error error = 5; // Error if health check failed
+}
+
+// PingRequest represents a ping request
+message PingRequest {
+  string message = 1; // Optional ping message
+  google.protobuf.Timestamp timestamp = 2; // When the ping was sent
+}
+
+// PingResponse represents a ping response
+message PingResponse {
+  string message = 1; // Pong message
+  google.protobuf.Timestamp timestamp = 2; // When the pong was sent
+  int64 latency_ms = 3; // Latency in milliseconds
+}
+
+// GetStatusRequest represents a request to get service status
+message GetStatusRequest {
+  string service = 1; // Service name to get status for
+  map<string, string> parameters = 2; // Status check parameters
+}
+
+// GetStatusResponse represents a response with service status
+message GetStatusResponse {
+  Status status = 1; // The status of the service
+  string message = 2; // Status message
+  google.protobuf.Timestamp timestamp = 3; // When the status was generated
+  Error error = 4; // Error details if status is ERROR
+  map<string, string> metadata = 5; // Additional metadata
+}
+
+// GenericMessage represents a generic message structure
+message GenericMessage {
+  string id = 1; // Unique message ID
+  string type = 2; // Message type
+  bytes payload = 3; // Message payload
+  google.protobuf.Timestamp timestamp = 4; // When the message was created
+  map<string, string> headers = 5; // Message headers
+}
+
+// Mode represents the initialization mode for a process
+enum Mode {
+  MODE_UNSPECIFIED = 0;
+  MODE_CONSUMER = 1;
+  MODE_WORKER = 2;
+}
+
+// Initialize represents an initialization message
+message Initialize {
+  Mode mode = 1; // The mode for initialization (CONSUMER or WORKER)
+}
+
+// IPCService provides basic IPC functionality
+service IPCService {
+  // Ping checks if the service is reachable
+  rpc Ping(PingRequest) returns (PingResponse);
+  
+  // HealthCheck performs a health check on the service
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  
+  // GetStatus returns the current status of the service
+  rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
+} 
+
+// NetworkState represents the state of network connectivity
+enum NetworkState {
+  NETWORK_STATE_UNSPECIFIED = 0;
+  NETWORK_STATE_DISCONNECTED = 1;
+  NETWORK_STATE_CONNECTING = 2;
+  NETWORK_STATE_CONNECTED = 3;
+}
+
+// NetworkStatus represents the current network status
+message NetworkStatus {
+  NetworkState state = 1; // Current network state
+  int32 peer_count = 2; // Number of connected peers
+} 
