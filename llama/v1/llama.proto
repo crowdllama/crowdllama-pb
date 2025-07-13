@@ -27,6 +27,7 @@ message GenerateResponse {
   int64 prompt_eval_duration = 10; // Prompt evaluation duration in nanoseconds
   int32 eval_count = 11; // Number of tokens evaluated
   int64 eval_duration = 12; // Evaluation duration in nanoseconds
+  string worker_id = 13; // ID of the worker that processed the inference task
 }
 
 // LlamaService defines the service interface for Llama API
