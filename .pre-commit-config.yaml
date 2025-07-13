@@ -1,0 +1,9 @@
+repos:
+  - repo: https://github.com/bufbuild/buf
+    rev: v1.28.1
+    hooks:
+      - id: buf-format
+        args: [--write]
+      - id: buf-lint
+      - id: buf-breaking
+        args: [--against, '.git#branch=main'] 
