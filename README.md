@@ -1,3 +1,5 @@
+[![Protobuf CI](https://github.com/crowdllama/crowdllama-pb/actions/workflows/protobuf.yml/badge.svg)](https://github.com/crowdllama/crowdllama-pb/actions/workflows/protobuf.yml)
+
 # CrowdLlama Protobuf Definitions
 
 This repository contains Protocol Buffer definitions for the CrowdLlama API, specifically for interacting with Llama models.
