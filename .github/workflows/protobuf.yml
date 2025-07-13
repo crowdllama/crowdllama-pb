@@ -29,15 +29,6 @@ jobs:
       - name: Install buf dependencies
         run: buf dep update
 
-      - name: Debug buf configuration
-        run: |
-          echo "=== buf.yaml contents ==="
-          cat buf.yaml
-          echo "=== buf version ==="
-          buf --version
-          echo "=== buf mod ls ==="
-          buf mod ls
-
       - name: Check buf format
         run: buf format --diff --exit-code
 
