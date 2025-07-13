@@ -1,20 +1,20 @@
 syntax = "proto3";
 
-package llama;
+package llama.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/crowdllama/crowdllama-pb/llama";
+option go_package = "github.com/crowdllama/crowdllama-pb/llama/v1";
 
-// LlamaRequest represents a request to the Llama API
-message LlamaRequest {
+// GenerateRequest represents a request to generate a response
+message GenerateRequest {
   string model = 1; // The model to use (e.g., "llama3.2")
   string prompt = 2; // The input prompt
   bool stream = 3; // Whether to stream the response
 }
 
-// LlamaResponse represents a response from the Llama API
-message LlamaResponse {
+// GenerateResponse represents a response from the generation
+message GenerateResponse {
   string model = 1; // The model used
   google.protobuf.Timestamp created_at = 2; // Timestamp when response was created
   string response = 3; // The generated response text
@@ -32,8 +32,5 @@ message LlamaResponse {
 // LlamaService defines the service interface for Llama API
 service LlamaService {
   // Generate generates a response for the given request
-  rpc Generate(LlamaRequest) returns (LlamaResponse);
-
-  // GenerateStream generates a streaming response for the given request
-  rpc GenerateStream(LlamaRequest) returns (stream LlamaResponse);
+  rpc Generate(GenerateRequest) returns (GenerateResponse);
 }
