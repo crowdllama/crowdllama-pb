@@ -98,6 +98,7 @@ type GenerateResponse struct {
 	PromptEvalDuration int64                  `protobuf:"varint,10,opt,name=prompt_eval_duration,json=promptEvalDuration,proto3" json:"prompt_eval_duration,omitempty"` // Prompt evaluation duration in nanoseconds
 	EvalCount          int32                  `protobuf:"varint,11,opt,name=eval_count,json=evalCount,proto3" json:"eval_count,omitempty"`                              // Number of tokens evaluated
 	EvalDuration       int64                  `protobuf:"varint,12,opt,name=eval_duration,json=evalDuration,proto3" json:"eval_duration,omitempty"`                     // Evaluation duration in nanoseconds
+	WorkerId           string                 `protobuf:"bytes,13,opt,name=worker_id,json=workerId,proto3" json:"worker_id,omitempty"`                                  // ID of the worker that processed the inference task
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -216,6 +217,13 @@ func (x *GenerateResponse) GetEvalDuration() int64 {
 	return 0
 }
 
+func (x *GenerateResponse) GetWorkerId() string {
+	if x != nil {
+		return x.WorkerId
+	}
+	return ""
+}
+
 var File_llama_v1_llama_proto protoreflect.FileDescriptor
 
 const file_llama_v1_llama_proto_rawDesc = "" +
@@ -224,7 +232,7 @@ const file_llama_v1_llama_proto_rawDesc = "" +
 	"\x0fGenerateRequest\x12\x14\n" +
 	"\x05model\x18\x01 \x01(\tR\x05model\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x16\n" +
-	"\x06stream\x18\x03 \x01(\bR\x06stream\"\xbc\x03\n" +
+	"\x06stream\x18\x03 \x01(\bR\x06stream\"\xd9\x03\n" +
 	"\x10GenerateResponse\x12\x14\n" +
 	"\x05model\x18\x01 \x01(\tR\x05model\x129\n" +
 	"\n" +
@@ -241,7 +249,8 @@ const file_llama_v1_llama_proto_rawDesc = "" +
 	" \x01(\x03R\x12promptEvalDuration\x12\x1d\n" +
 	"\n" +
 	"eval_count\x18\v \x01(\x05R\tevalCount\x12#\n" +
-	"\reval_duration\x18\f \x01(\x03R\fevalDuration2Q\n" +
+	"\reval_duration\x18\f \x01(\x03R\fevalDuration\x12\x1b\n" +
+	"\tworker_id\x18\r \x01(\tR\bworkerId2Q\n" +
 	"\fLlamaService\x12A\n" +
 	"\bGenerate\x12\x19.llama.v1.GenerateRequest\x1a\x1a.llama.v1.GenerateResponseB\x91\x01\n" +
 	"\fcom.llama.v1B\n" +
