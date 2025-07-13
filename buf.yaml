@@ -1,5 +1,5 @@
 version: v1
-name: crowdllama-pb
+name: buf.build/crowdllama/crowdllama-pb
 deps:
   - buf.build/googleapis/googleapis
 lint:
