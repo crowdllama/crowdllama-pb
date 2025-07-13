@@ -2,38 +2,38 @@ syntax = "proto3";
 
 package llama;
 
-option go_package = "github.com/crowdllama/crowdllama-pb/llama";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/crowdllama/crowdllama-pb/llama";
 
 // LlamaRequest represents a request to the Llama API
 message LlamaRequest {
-  string model = 1;    // The model to use (e.g., "llama3.2")
-  string prompt = 2;   // The input prompt
-  bool stream = 3;     // Whether to stream the response
+  string model = 1; // The model to use (e.g., "llama3.2")
+  string prompt = 2; // The input prompt
+  bool stream = 3; // Whether to stream the response
 }
 
 // LlamaResponse represents a response from the Llama API
 message LlamaResponse {
-  string model = 1;                                    // The model used
-  google.protobuf.Timestamp created_at = 2;           // Timestamp when response was created
-  string response = 3;                                 // The generated response text
-  bool done = 4;                                       // Whether the response is complete
-  string done_reason = 5;                              // Reason for completion (e.g., "stop")
-  repeated int32 context = 6;                          // Token context array
-  int64 total_duration = 7;                           // Total duration in nanoseconds
-  int64 load_duration = 8;                            // Model loading duration in nanoseconds
-  int32 prompt_eval_count = 9;                        // Number of prompt tokens evaluated
-  int64 prompt_eval_duration = 10;                    // Prompt evaluation duration in nanoseconds
-  int32 eval_count = 11;                              // Number of tokens evaluated
-  int64 eval_duration = 12;                           // Evaluation duration in nanoseconds
+  string model = 1; // The model used
+  google.protobuf.Timestamp created_at = 2; // Timestamp when response was created
+  string response = 3; // The generated response text
+  bool done = 4; // Whether the response is complete
+  string done_reason = 5; // Reason for completion (e.g., "stop")
+  repeated int32 context = 6; // Token context array
+  int64 total_duration = 7; // Total duration in nanoseconds
+  int64 load_duration = 8; // Model loading duration in nanoseconds
+  int32 prompt_eval_count = 9; // Number of prompt tokens evaluated
+  int64 prompt_eval_duration = 10; // Prompt evaluation duration in nanoseconds
+  int32 eval_count = 11; // Number of tokens evaluated
+  int64 eval_duration = 12; // Evaluation duration in nanoseconds
 }
 
 // LlamaService defines the service interface for Llama API
 service LlamaService {
   // Generate generates a response for the given request
   rpc Generate(LlamaRequest) returns (LlamaResponse);
-  
+
   // GenerateStream generates a streaming response for the given request
   rpc GenerateStream(LlamaRequest) returns (stream LlamaResponse);
-} 
+}
