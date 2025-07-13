@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package ipc.v1;
 
-option go_package = "github.com/crowdllama/crowdllama-pb/ipc/v1";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/crowdllama/crowdllama-pb/ipc/v1";
 
 // Status represents the status of an operation
 enum Status {
@@ -112,13 +112,13 @@ message Initialize {
 service IPCService {
   // Ping checks if the service is reachable
   rpc Ping(PingRequest) returns (PingResponse);
-  
+
   // HealthCheck performs a health check on the service
   rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
-  
+
   // GetStatus returns the current status of the service
   rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
-} 
+}
 
 // NetworkState represents the state of network connectivity
 enum NetworkState {
@@ -132,4 +132,4 @@ enum NetworkState {
 message NetworkStatus {
   NetworkState state = 1; // Current network state
   int32 peer_count = 2; // Number of connected peers
-} 
+}
